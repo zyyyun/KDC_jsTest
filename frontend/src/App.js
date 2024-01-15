@@ -1,11 +1,15 @@
 console.log("app is running!");
 
 class App {
-  $target = null;
-  data = [];
+  $target = null; //$ = dom을 가리키는것
+  data = []; 
 
-  constructor($target) {
+  constructor($target) { //target을 받아 초기화
     this.$target = $target;
+
+    // this.DarkModeToggle = new this.DarkModeToggle({
+    //   $target,
+    // });
 
     this.searchInput = new SearchInput({
       $target,
