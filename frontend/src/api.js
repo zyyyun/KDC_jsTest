@@ -1,5 +1,4 @@
-const API_ENDPOINT =
-  "https://localhost:4001";
+const API_ENDPOINT = "http://localhost:4001";
 
 const api = {
   fetchCats: keyword => {

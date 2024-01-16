@@ -7,9 +7,12 @@ class App {
   constructor($target) { //target을 받아 초기화
     this.$target = $target;
 
-    // this.DarkModeToggle = new this.DarkModeToggle({
-    //   $target,
-    // });
+    this.searchInput = new DarkModeToggle({
+      $target,
+      // onSearch: keyword => {
+      //   api.fetchCats(keyword).then(({ data }) => this.setState(data));
+      // }
+    });
 
     this.searchInput = new SearchInput({
       $target,
