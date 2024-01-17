@@ -3,6 +3,7 @@ console.log("app is running!");
 class App {
   $target = null; //$ = dom을 가리키는것
   data = []; 
+  page = 1;
 
   constructor($target) { //target을 받아 초기화
     this.$target = $target;
@@ -49,6 +50,29 @@ class App {
         this.imageInfo.showDetail({
           visible: true,
           cat
+        });
+      },
+      onNextPage: () =>{
+        console.log('다음 페이지 로딩');
+        this.Loading.show();
+        const keywordHistory = localStorage.getItem
+        ('keywordHistory') === null ? [] : localStorage.getItem
+        ('keywordHistory').split(',');
+        console.log(keywordHistory);
+
+        const lastkeyword = keywordHistory[0];
+        const page = this.page + 1;
+        api.fetchCatsPage(lastkeyword, page).then(({ data }) => {
+          console.log(data);
+
+          let newData = this.data.concat(data);
+          console.log(newData);
+
+          this.setState(newData);
+          this.page = page;
+          console.log(this.page);
+
+          this.Loading.hide();
         });
       }
     });
