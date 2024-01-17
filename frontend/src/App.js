@@ -28,9 +28,12 @@ class App {
           this.setState(data);
           console.log('hide');
           this.Loading.hide();
+          //로컬에 저장
+          this.saveResult(data);
         });
       },
       onRandomSearch: () =>{
+        this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
           this.setState(data);
           this.Loading.hide();
@@ -41,10 +44,11 @@ class App {
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: image => {
-        this.imageInfo.setState({
+      onClick: cat => {
+        console.log(cat);
+        this.imageInfo.showDetail({
           visible: true,
-          image
+          cat
         });
       }
     });
@@ -62,5 +66,16 @@ class App {
     console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(result){
+    console.log(result);
+    localStorage.setItem('lastResult', JSON.stringify(result)); 
+  }
+
+  init(){
+    const lastResult = localStorage.getItem('keywordHistory') === null ? [] :
+    JSON.parse(localStorage.getItem('keywordHistory')); 
+    this.setState(lastResult);
   }
 }
