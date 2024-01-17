@@ -22,37 +22,35 @@ class SearchResult {
     this.render();
   }
 
-  isElementInViewport(el){
-    const rect = el.getBoundingClientRect();
-    return(
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <=(window.innerHeight || document.
-      documentElement.clientHeight) && 
-      rect.right <= (window.innerWidth || document.documentElement.
-      clientWidth)
-    );
-  }
+  listObserver = new IntersectionObserver((items, observer) => {
+    items.forEach(item =>{    
+      //아이템이 화면에 보일 때
+      if (items.isIntersecting){
+        //이미지를 로드한다
+        item.target.querySelector('img').src = item.target
+        .querySelector('img').dataset.src;
 
-  applyEventToElement = (items) =>{
-    document.addEventListener('scroll',() =>{
-      items.forEach((el, index) =>{
-        // console.log(items.length);
-        if(this.isElementInViewport(el) && items.length-1 === index){
+        //마지막 요소를 찾아낸다
+        // console.log(this.data.length);
+        let dataIndex = Number(item.target.dataset.index);
+        // console.log(dataIndex);
+        //마지막 요소라면? nextPage 호출
+        if(dataIndex + 1 === this.data.length){
+          console.log('마지막');
           this.onNextPage();
         }
-        // console.log(this.isElementInViewport(el));
-      })
+      }
     })
-  }
+  });
 
   render() {
     this.$searchResult.innerHTML = this.data
       .map(
-        cat => `
-          <div class="item">
-            <img src=${cat.url} alt=${cat.name} />
-          </div>
+        (cat, index) => `
+          <li class="item" data-index=${index}>
+            <img src="https://via.placeholder.com/200*300"
+            data-src=${cat.url} alt=${cat.name} />
+          </li>
         `
       )
       .join("");
@@ -61,8 +59,8 @@ class SearchResult {
       $item.addEventListener("click", () => {
         this.onClick(this.data[index]);
       });
+
+      this.listObserver.observe($item);
     });
-    let listItems = this.$searchResult.querySelectorAll(".item");
-    this.applyEventToElement(listItems);
   }
 }
