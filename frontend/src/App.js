@@ -1,5 +1,12 @@
 console.log("app is running!");
 
+import Loading from './Loading.js';
+import DarkModeToggle from './DarkModeToggle.js';
+import SearchInput from './SearchInput.js';
+import SearchResult from './SearchResult.js';
+import ImageInfo from './ImageInfo.js';
+import api from './api.js';
+
 class App {
   $target = null; //$ = dom을 가리키는것
   data = []; 
@@ -23,11 +30,9 @@ class App {
       $target,
       onSearch: keyword => {
         //로딩 show
-        console.log('show');
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
-          console.log('hide');
+          this.setState(data ? data : []);
           this.Loading.hide();
           //로컬에 저장
           this.saveResult(data);
@@ -103,3 +108,5 @@ class App {
     this.setState(lastResult);
   }
 }
+
+export default App;
