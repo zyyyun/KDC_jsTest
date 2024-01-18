@@ -25,7 +25,7 @@ class SearchResult {
   listObserver = new IntersectionObserver((items, observer) => {
     items.forEach(item =>{    
       //아이템이 화면에 보일 때
-      if (items.isIntersecting){
+      if (item.isIntersecting){
         //이미지를 로드한다
         item.target.querySelector('img').src = item.target
         .querySelector('img').dataset.src;
@@ -48,7 +48,7 @@ class SearchResult {
       .map(
         (cat, index) => `
           <li class="item" data-index=${index}>
-            <img src="https://via.placeholder.com/200*300"
+            <img src="https://via.placeholder.com/200x300"
             data-src=${cat.url} alt=${cat.name} />
           </li>
         `
