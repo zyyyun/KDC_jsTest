@@ -9,8 +9,11 @@ import api from './api.js';
 
 class App {
   $target = null; //$ = dom을 가리키는것
-  data = []; 
-  page = 1;
+  DEFAULT_PAGE = 1
+  data = {
+    items: [],
+    page: this.DEFAULT_PAGE
+  }
 
   constructor($target) { //target을 받아 초기화
     this.$target = $target;
@@ -21,9 +24,6 @@ class App {
     
     this.searchInput = new DarkModeToggle({
       $target,
-      // onSearch: keyword => {
-      //   api.fetchCats(keyword).then(({ data }) => this.setState(data));
-      // }
     });
 
     this.searchInput = new SearchInput({
@@ -32,7 +32,10 @@ class App {
         //로딩 show
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data ? data : []);
+          this.setState({
+            items: data ? data: [],
+            page: 1,
+          });
           this.Loading.hide();
           //로컬에 저장
           this.saveResult(data);
@@ -41,7 +44,10 @@ class App {
       onRandomSearch: () =>{
         this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
-          this.setState(data);
+          this.setState({
+            items: data ? data : [],
+            page:1
+          });
           this.Loading.hide();
         })
       }
@@ -49,7 +55,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data,
+      initialData: this.data.items,
       onClick: cat => {
         console.log(cat);
         this.imageInfo.showDetail({
@@ -63,20 +69,15 @@ class App {
         const keywordHistory = localStorage.getItem
         ('keywordHistory') === null ? [] : localStorage.getItem
         ('keywordHistory').split(',');
-        console.log(keywordHistory);
 
         const lastkeyword = keywordHistory[0];
         const page = this.page + 1;
         api.fetchCatsPage(lastkeyword, page).then(({ data }) => {
-          console.log(data);
-
           let newData = this.data.concat(data);
-          console.log(newData);
-
-          this.setState(newData);
-          this.page = page;
-          console.log(this.page);
-
+          this.setState({
+            items: newData,
+            page: page
+          })
           this.Loading.hide();
         });
       }
@@ -94,18 +95,20 @@ class App {
   setState(nextData) {
     console.log(this);
     this.data = nextData;
-    this.searchResult.setState(nextData);
+    this.searchResult.setState(nextData.items);
   }
 
   saveResult(result){
-    console.log(result);
     localStorage.setItem('lastResult', JSON.stringify(result)); 
   }
 
   init(){
     const lastResult = localStorage.getItem('keywordHistory') === null ? [] :
     JSON.parse(localStorage.getItem('keywordHistory')); 
-    this.setState(lastResult);
+    this.setState({
+      items: lastResult,
+      page: this.DEFAULT_PAGE
+    });
   }
 }
 

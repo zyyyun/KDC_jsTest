@@ -20,16 +20,14 @@ class ImageInfo {
     this.render();
   }
 
-  showDetail(cat){
-    // console.log(cat);
-    // 상세 정보 요청
-    api.fetchCatDetail(cat.cat.id).then(({data}) => {
-      // 정보를 업데이트
+  async showDetail(data){
+    const detailInfo = await api.fetchCatDetail(data.cat.id);
+    if(detailInfo){
       this.setState({
         visible: true,
-        cat: data
+        cat: detailInfo.data
       });
-    });
+    }
   }
 
   CloseImageInfo(){
@@ -58,11 +56,7 @@ class ImageInfo {
         </div>`;
       this.$imageInfo.style.display = "block";
 
-      // this.$imageInfo.querySelector('.close').addEventListener
-      // ('click', (e) =>{
-      //   this.CloseImageInfo();
-      // });
-      //keypress, keydown, keyup 차이 리서치
+      //TODO: keypress, keydown, keyup 차이 리서치
       document.addEventListener('keydown', (e) => {
         // console.log(e.key);
         if(e.key === 'Escape'){
