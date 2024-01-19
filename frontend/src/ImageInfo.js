@@ -18,6 +18,16 @@ class ImageInfo {
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.setFade(nextData.visible);
+  }
+  
+  setFade(visible){
+    if(visible){
+      this.$imageInfo.classList.add('show');
+    }
+    else{
+      this.$imageInfo.classList.remove('show');
+    }
   }
 
   async showDetail(data){
@@ -56,7 +66,7 @@ class ImageInfo {
         </div>`;
       this.$imageInfo.style.display = "block";
 
-      //TODO: keypress, keydown, keyup 차이 리서치
+      // keypress, keydown, keyup 차이 리서치
       document.addEventListener('keydown', (e) => {
         // console.log(e.key);
         if(e.key === 'Escape'){
@@ -64,8 +74,8 @@ class ImageInfo {
         }
       });
       this.$imageInfo.addEventListener('click', (e) => {
-        console.log(e.target.className);
-        if(e.target.className === 'ImageInfo' || e.target.className === 'close'){
+        // console.log(e.target.className);
+        if(e.target.className === 'ImageInfo show' || e.target.className === 'close'){
           this.CloseImageInfo();
         }
       });
