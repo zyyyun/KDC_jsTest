@@ -1,4 +1,6 @@
 class Loading{
+    $loading = null;
+    data = null;
     constructor({$target}){
         const $loading = document.createElement("div");
         this.$loading = $loading;

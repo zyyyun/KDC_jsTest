@@ -58,13 +58,13 @@ body * {
 }
 
 .SearchInput {
-  width: 100%;
+  width: 80%;
   font-size: 40px;
   padding: 10px 15px;
 }
 
 .RandomButton{
-  width: 10%;
+  width: 15%;
   font-size: 40px;
   cursor: pointer;
 }
@@ -123,6 +123,12 @@ body * {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 40px;
+}
+
+.Empty{
+  text-align: center;
+  font-size: 30px;
+  padding: 100px 0;
 }
 
 

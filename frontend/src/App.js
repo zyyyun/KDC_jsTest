@@ -71,9 +71,9 @@ class App {
         ('keywordHistory').split(',');
 
         const lastkeyword = keywordHistory[0];
-        const page = this.page + 1;
+        const page = this.data.page + 1;
         api.fetchCatsPage(lastkeyword, page).then(({ data }) => {
-          let newData = this.data.concat(data);
+          let newData = this.data.items.concat(data);
           this.setState({
             items: newData,
             page: page
