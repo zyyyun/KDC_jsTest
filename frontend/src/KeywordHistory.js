@@ -10,12 +10,6 @@ class KeywordHistory{
         this.$keywordHistory.className = 'KeywordHistory';
         $target.appendChild(this.$keywordHistory);
 
-        // this.data = [
-        //     '아',
-        //     '고양이',
-        //     'cat'
-        // ];
-
         this.onSearch = onSearch;
         this.init();
         this.render();

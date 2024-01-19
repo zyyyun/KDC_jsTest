@@ -55,6 +55,25 @@ body * {
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.SearchResult .item .content{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.3);
+  font-size: 30px;
+  color: #fff;
+  opacity: 0;
+  transition: all .5s ease;
+}
+
+.SearchResult .item:hover .content{
+  opacity: 1;
 }
 
 .SearchInputSection {
@@ -76,9 +95,16 @@ body * {
 }
 
 .SearchInput {
-  width: 80%;
+  width: 70%;
   font-size: 40px;
   padding: 10px 15px;
+}
+
+.LimitCount{
+  width: 10%;
+  height: 75px;
+  vertical-align: top;
+  font-size: 20px;
 }
 
 .RandomButton{
@@ -157,6 +183,39 @@ body * {
   padding: 100px 0;
 }
 
+.Banner{
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.Banner ul{
+  margin: 0;
+  padding: 0;
+}
+
+.Banner ul li{
+  height: 300px;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.Banner button{
+  position: absolute;
+  top: 50%;
+  z-index: 10px;
+}
+
+.Banner .prev{
+  left: 10px;
+}
+
+.Banner .next{
+  right: 10px;
+}
 
 /* 반응형 적용 */
 @media screen and (max-width: 992px){

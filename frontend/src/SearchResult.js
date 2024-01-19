@@ -62,6 +62,9 @@ class SearchResult {
           <li class="item" data-index=${index}>
             <img src="https://via.placeholder.com/200x300"
             data-src=${cat.url} alt=${cat.name} />
+            <div class="content">
+              ${cat.name}
+            </div>
           </li>
         `
       )

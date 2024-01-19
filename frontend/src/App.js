@@ -6,6 +6,7 @@ import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js';
 import ImageInfo from './ImageInfo.js';
 import api from './api.js';
+import Banner from './Banner.js';
 
 class App {
   $target = null; //$ = dom을 가리키는것
@@ -28,13 +29,13 @@ class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: keyword => {
+      onSearch: (keyword, limit) => {
         //로딩 show
         this.Loading.show();
-        api.fetchCats(keyword).then(({ data }) => {
+        api.fetchCatsWithLimit(keyword, limit).then(({ data }) => {
           this.setState({
-            items: data ? data: [],
-            page: 1,
+            items: data,
+            page: this.DEFAULT_PAGE
           });
           this.Loading.hide();
           //로컬에 저장
@@ -45,12 +46,16 @@ class App {
         this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
           this.setState({
-            items: data ? data : [],
-            page:1
+            items: data,
+            page: this.DEFAULT_PAGE
           });
           this.Loading.hide();
         })
       }
+    });
+
+    this.Banner = new Banner({
+      $target,
     });
 
     this.searchResult = new SearchResult({
